@@ -74,7 +74,25 @@ python -c "import torch; import transformers; print('Setup successful!')"
 wandb login
 ```
 
+## Dataset
+
+- **Name**: IMDb Movie Reviews
+- **Source**: Hugging Face Datasets
+- **Size**: 50,000 movie reviews
+- **Classes**: Binary (Positive/Negative)
+- **Split**: 70/15/15 (Train/Validation/Test)
+
+See `notebooks/01_exploratory_data_analysis.ipynb` for detailed EDA.
+
 ## Usage
+
+### Exploratory Data Analysis
+
+Run the EDA notebook to understand the dataset:
+
+```bash
+jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
+```
 
 ### Training
 
@@ -86,13 +104,13 @@ Inference scripts and Gradio demo will be added in subsequent tasks.
 
 ## Model Performance
 
-- **DistilBERT**: 92% accuracy
+- **DistilBERT**: 92% accuracy (target)
 - **TF-IDF Baseline**: TBD
 
 ## Project Status
 
 - [x] Task 1: Project Setup & Environment Configuration
-- [ ] Task 2: Data Collection & Preprocessing
+- [x] Task 2: Dataset Acquisition & Exploratory Analysis
 - [ ] Task 3: TF-IDF Baseline Implementation
 - [ ] Task 4: DistilBERT Fine-tuning
 - [ ] Task 5: Model Interpretability

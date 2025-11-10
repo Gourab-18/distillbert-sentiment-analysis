@@ -1,0 +1,58 @@
+{
+  "dataset_name": "IMDb Movie Reviews",
+  "dataset_source": "Hugging Face Datasets",
+  "task": "Binary Sentiment Classification",
+  "total_samples": 50000,
+  "original_split": {
+    "train": 25000,
+    "test": 25000
+  },
+  "proposed_split": {
+    "train": 20000,
+    "validation": 5000,
+    "test": 25000,
+    "train_percentage": 40.0,
+    "validation_percentage": 10.0,
+    "test_percentage": 50.0
+  },
+  "class_distribution": {
+    "train": {
+      "negative": 12500,
+      "positive": 12500,
+      "balance": "Perfectly balanced (50/50)"
+    },
+    "test": {
+      "negative": 12500,
+      "positive": 12500,
+      "balance": "Perfectly balanced (50/50)"
+    }
+  },
+  "text_statistics": {
+    "character_length": {
+      "mean": 1325.07,
+      "median": 979.0,
+      "min": 52,
+      "max": 13704,
+      "std": 1003.13
+    },
+    "word_count": {
+      "mean": 233.79,
+      "median": 174.0,
+      "min": 10,
+      "max": 2470,
+      "std": 173.73
+    }
+  },
+  "potential_challenges": [
+    "Variable text lengths - need to handle padding/truncation",
+    "Long reviews may exceed model max sequence length (512 tokens for BERT models)",
+    "HTML tags and special characters may need cleaning",
+    "Some reviews contain spoilers which may affect sentiment"
+  ],
+  "recommendations": [
+    "Use max_length=512 for tokenization (DistilBERT limit)",
+    "Apply truncation for longer reviews",
+    "Consider data augmentation if needed",
+    "Monitor for class imbalance in validation split"
+  ]
+}
