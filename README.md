@@ -94,9 +94,24 @@ Run the EDA notebook to understand the dataset:
 jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
 ```
 
-### Training
+### Training Baseline Model
 
-Training scripts and notebooks will be added in subsequent tasks.
+Train the TF-IDF + Logistic Regression baseline:
+
+```bash
+cd scripts
+python train_baseline.py
+```
+
+Optional arguments:
+- `--train_size`: Training set size (default: 20000)
+- `--val_size`: Validation set size (default: 5000)
+- `--max_features`: Max TF-IDF features (default: 10000)
+- `--ngram_range`: N-gram range (default: 1 2)
+
+### Training DistilBERT
+
+DistilBERT training scripts will be added in Task 4.
 
 ### Inference
 
@@ -104,14 +119,23 @@ Inference scripts and Gradio demo will be added in subsequent tasks.
 
 ## Model Performance
 
-- **DistilBERT**: 92% accuracy (target)
-- **TF-IDF Baseline**: TBD
+### Baseline Model (TF-IDF + Logistic Regression)
+- **Validation Accuracy**: 89.02%
+- **Test Accuracy**: 87.78%
+- **Precision**: 87.63%
+- **Recall**: 87.99%
+- **F1 Score**: 87.81%
+- **Training Time**: 9.6 seconds
+
+### DistilBERT (Target)
+- **Target Accuracy**: 92%
+- Training to be completed in Task 4
 
 ## Project Status
 
 - [x] Task 1: Project Setup & Environment Configuration
 - [x] Task 2: Dataset Acquisition & Exploratory Analysis
-- [ ] Task 3: TF-IDF Baseline Implementation
+- [x] Task 3: Classical Baseline Implementation (TF-IDF + Logistic Regression)
 - [ ] Task 4: DistilBERT Fine-tuning
 - [ ] Task 5: Model Interpretability
 - [ ] Task 6: Gradio Deployment

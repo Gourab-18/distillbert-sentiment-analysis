@@ -1,0 +1,75 @@
+{
+  "model_type": "TF-IDF + Logistic Regression",
+  "dataset": "IMDb Movie Reviews",
+  "training_config": {
+    "train_size": 20000,
+    "val_size": 5000,
+    "test_size": 25000,
+    "max_features": 10000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_iter": 1000,
+    "random_seed": 42
+  },
+  "training_time_seconds": 7.999932050704956,
+  "validation_metrics": {
+    "accuracy": 0.8902,
+    "precision": 0.8850174216027874,
+    "recall": 0.900709219858156,
+    "f1": 0.8927943760984183,
+    "precision_per_class": {
+      "negative": 0.8957385188249897,
+      "positive": 0.8850174216027874
+    },
+    "recall_per_class": {
+      "negative": 0.879366368805849,
+      "positive": 0.900709219858156
+    },
+    "f1_per_class": {
+      "negative": 0.8874769419963107,
+      "positive": 0.8927943760984183
+    },
+    "confusion_matrix": [
+      [
+        2165,
+        297
+      ],
+      [
+        252,
+        2286
+      ]
+    ],
+    "num_samples": 5000
+  },
+  "test_metrics": {
+    "accuracy": 0.87784,
+    "precision": 0.8762746972594009,
+    "recall": 0.87992,
+    "f1": 0.8780935653840013,
+    "precision_per_class": {
+      "negative": 0.8794183804627249,
+      "positive": 0.8762746972594009
+    },
+    "recall_per_class": {
+      "negative": 0.87576,
+      "positive": 0.87992
+    },
+    "f1_per_class": {
+      "negative": 0.8775853775853776,
+      "positive": 0.8780935653840013
+    },
+    "confusion_matrix": [
+      [
+        10947,
+        1553
+      ],
+      [
+        1501,
+        10999
+      ]
+    ],
+    "num_samples": 25000
+  }
+}
