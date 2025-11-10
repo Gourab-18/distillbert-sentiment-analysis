@@ -94,6 +94,31 @@ Run the EDA notebook to understand the dataset:
 jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
 ```
 
+### Data Preprocessing & Tokenization
+
+Preprocess and tokenize data for DistilBERT:
+
+```bash
+cd scripts
+python preprocess.py --split all
+```
+
+This will:
+- Clean text (remove HTML, URLs, lowercase)
+- Tokenize with DistilBERT tokenizer
+- Validate token lengths (max 512 tokens)
+- Save processed data to `data/processed/`
+
+Optional arguments:
+- `--split`: Which split to process (all, train, validation, test)
+- `--max_length`: Maximum sequence length (default: 512)
+- `--model_name`: DistilBERT model (default: distilbert-base-uncased)
+
+**Outputs:**
+- Tokenized datasets: `data/processed/tokenized_distilbert-base-uncased/`
+- Config: `data/processed/preprocessing_config.json`
+- Token length distribution: `reports/token_length_distribution.png`
+
 ### Training Baseline Model
 
 Train the TF-IDF + Logistic Regression baseline:
@@ -111,7 +136,7 @@ Optional arguments:
 
 ### Training DistilBERT
 
-DistilBERT training scripts will be added in Task 4.
+DistilBERT fine-tuning will be implemented in upcoming tasks.
 
 ### Inference
 
@@ -136,10 +161,10 @@ Inference scripts and Gradio demo will be added in subsequent tasks.
 - [x] Task 1: Project Setup & Environment Configuration
 - [x] Task 2: Dataset Acquisition & Exploratory Analysis
 - [x] Task 3: Classical Baseline Implementation (TF-IDF + Logistic Regression)
-- [ ] Task 4: DistilBERT Fine-tuning
-- [ ] Task 5: Model Interpretability
-- [ ] Task 6: Gradio Deployment
-- [ ] Task 7: Documentation & Reporting
+- [x] Task 4: Data Preprocessing & Tokenization Pipeline
+- [ ] Task 5: DistilBERT Fine-tuning
+- [ ] Task 6: Model Interpretability
+- [ ] Task 7: Gradio Deployment
 
 ## Contributing
 
