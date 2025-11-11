@@ -1,0 +1,75 @@
+# DistilBERT QUICK TEST Configuration
+# This config is for quick testing with reduced dataset size
+# Estimated time: 10-90 minutes depending on device
+
+# Model Configuration
+model:
+  name: "distilbert-base-uncased"
+  num_labels: 2
+  dropout: 0.1
+  attention_dropout: 0.1
+
+# Data Configuration - REDUCED FOR QUICK TEST
+data:
+  train_size: 5000      # Reduced from 20000
+  val_size: 1000        # Reduced from 5000
+  test_size: 25000      # Keep full test set
+  max_length: 512
+  train_batch_size: 16
+  eval_batch_size: 32
+  num_workers: 2
+
+# Training Configuration - REDUCED EPOCHS
+training:
+  num_epochs: 2         # Reduced from 3
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_steps: 200     # Reduced from 500
+  max_grad_norm: 1.0
+  gradient_accumulation_steps: 1
+  fp16: false
+
+# Optimizer Configuration
+optimizer:
+  type: "AdamW"
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+
+# Scheduler Configuration
+scheduler:
+  type: "linear"
+  warmup_ratio: 0.1
+
+# Evaluation Configuration
+evaluation:
+  eval_steps: 200       # Reduced from 500
+  save_steps: 200       # Reduced from 500
+  logging_steps: 50     # Reduced from 100
+  save_total_limit: 2
+  metric_for_best_model: "eval_accuracy"
+  greater_is_better: true
+  load_best_model_at_end: true
+
+# Weights & Biases Configuration
+wandb:
+  enabled: true
+  project: "distilbert-sentiment-analysis"
+  entity: null
+  run_name: "quick_test"
+  tags: ["distilbert", "sentiment-analysis", "imdb", "quick-test"]
+  notes: "Quick test run with reduced dataset (5K train, 1K val, 2 epochs)"
+
+# Paths Configuration
+paths:
+  data_dir: "../data/processed/tokenized_distilbert-base-uncased"
+  output_dir: "../models/distilbert-sentiment-test"
+  logs_dir: "../logs"
+  cache_dir: "../cache"
+
+# Reproducibility
+seed: 42
+
+# Device Configuration
+device:
+  auto_detect: true
+  gpu_id: 0

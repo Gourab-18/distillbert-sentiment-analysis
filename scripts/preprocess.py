@@ -1,9 +1,5 @@
-"""
-Data Preprocessing & Tokenization Pipeline for DistilBERT
-
-This script preprocesses raw text data and tokenizes it for DistilBERT fine-tuning.
-Includes text cleaning, tokenization, and validation.
-"""
+# raw data taken and tokenized for DistilBERT
+# here we are using imdb dataset from huggingface  
 
 import os
 import re
@@ -26,26 +22,18 @@ sns.set_palette("husl")
 
 
 class TextPreprocessor:
-    """Text preprocessing utilities for cleaning raw text."""
 
+# cleaning raw test
     def __init__(self, lowercase=True, remove_html=True, remove_urls=True,
                  remove_special_chars=False):
-        """
-        Initialize text preprocessor.
 
-        Args:
-            lowercase: Convert text to lowercase
-            remove_html: Remove HTML tags
-            remove_urls: Remove URLs
-            remove_special_chars: Remove special characters (keep for sentiment)
-        """
+# remove all useless things sent in parameters
         self.lowercase = lowercase
         self.remove_html = remove_html
         self.remove_urls = remove_urls
         self.remove_special_chars = remove_special_chars
 
     def clean_html(self, text):
-        """Remove HTML tags and entities."""
         if not self.remove_html:
             return text
 
@@ -55,13 +43,13 @@ class TextPreprocessor:
         # Remove HTML entities
         text = re.sub(r'&[a-z]+;', ' ', text)
 
-        # Clean up <br /> tags specifically (common in IMDb reviews)
+        # remove <br /> ( many present in imdb reviews )
         text = re.sub(r'<br\s*/?\s*>', ' ', text)
 
         return text
 
     def clean_urls(self, text):
-        """Remove URLs from text."""
+        # remove urls
         if not self.remove_urls:
             return text
 
@@ -71,29 +59,18 @@ class TextPreprocessor:
         return text
 
     def clean_special_chars(self, text):
-        """Remove or normalize special characters."""
         if not self.remove_special_chars:
-            # Keep most punctuation for sentiment (!, ?, etc.)
-            # Just normalize whitespace
+
             text = re.sub(r'\s+', ' ', text)
             return text
 
-        # Remove special characters (aggressive - not recommended for sentiment)
         text = re.sub(r'[^a-zA-Z0-9\s.,!?]', ' ', text)
         text = re.sub(r'\s+', ' ', text)
 
         return text
 
     def preprocess(self, text):
-        """
-        Apply all preprocessing steps.
-
-        Args:
-            text: Raw text string
-
-        Returns:
-            Cleaned text string
-        """
+# calling all above functions
         if not isinstance(text, str):
             return ""
 
@@ -118,18 +95,13 @@ class TextPreprocessor:
 
 class DatasetTokenizer:
     """Tokenizer for preparing datasets for DistilBERT."""
+    # 
 
     def __init__(self, model_name='distilbert-base-uncased', max_length=512,
                  padding='max_length', truncation=True):
-        """
-        Initialize dataset tokenizer.
+        
+        # we get from Hugging Face
 
-        Args:
-            model_name: Name of DistilBERT model
-            max_length: Maximum sequence length (DistilBERT limit: 512)
-            padding: Padding strategy
-            truncation: Whether to truncate sequences
-        """
         self.model_name = model_name
         self.max_length = max_length
         self.padding = padding
@@ -173,17 +145,8 @@ class DatasetTokenizer:
 
 
 def load_and_split_data(train_size=20000, val_size=5000, seed=42):
-    """
-    Load IMDb dataset and create splits.
 
-    Args:
-        train_size: Number of samples for training
-        val_size: Number of samples for validation
-        seed: Random seed
-
-    Returns:
-        DatasetDict with train, validation, and test splits
-    """
+# loads imdb dataset from hugging face and split into train, val, test
     print("=" * 80)
     print("LOADING IMDB DATASET")
     print("=" * 80)
@@ -224,17 +187,8 @@ def load_and_split_data(train_size=20000, val_size=5000, seed=42):
 
 
 def preprocess_dataset(dataset, preprocessor, split_name):
-    """
-    Apply text preprocessing to a dataset split.
 
-    Args:
-        dataset: HuggingFace Dataset
-        preprocessor: TextPreprocessor instance
-        split_name: Name of the split
-
-    Returns:
-        Dataset with cleaned text
-    """
+# get dataset from hugging face and process
     print(f"\n[{split_name}] Preprocessing {len(dataset):,} samples...")
 
     def preprocess_batch(examples):
@@ -461,11 +415,11 @@ def main(args):
     print("DistilBERT Fine-Tuning for Sentiment Analysis")
     print("=" * 80)
 
-    # Create directories
+    # Create directories for storing processed data and reports
     Path('../data/processed').mkdir(parents=True, exist_ok=True)
     Path('../reports').mkdir(parents=True, exist_ok=True)
 
-    # Initialize preprocessor
+    # Initialized preprocessor
     print("\n" + "=" * 80)
     print("INITIALIZING PREPROCESSOR")
     print("=" * 80)

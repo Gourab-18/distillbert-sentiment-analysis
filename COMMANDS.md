@@ -14,14 +14,48 @@ This document contains all the commands needed to run the scripts in this projec
 
 ## Setup
 
-### Install Dependencies
+### Option 1: Install Dependencies (Direct Installation)
 ```bash
 # Install all required packages
 pip install -r requirements.txt
 
 # Verify installation
-python -c "import torch; import transformers; print('Setup successful!')"
+python3 -c "import torch; import transformers; print('Setup successful!')"
 ```
+
+### Option 2: Virtual Environment Setup (Recommended for Stability)
+```bash
+# Create virtual environment (Python3 3.9.6 recommended)
+python33 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Install specific PyTorch version (for compatibility)
+pip install torch==2.3.1
+
+# Install all other dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python33 -c "import torch; import transformers; print('Setup successful!')"
+```
+
+**Why use virtual environment?**
+- Avoids PyTorch compatibility issues (2.8.0 had hanging issues)
+- Ensures consistent package versions
+- Isolates project dependencies
+
+### Check Hardware Device
+```bash
+# Navigate to scripts directory
+cd scripts
+
+# Check available device (GPU/CPU/MPS)
+python33 check_device.py
+```
+
+**Output:** Shows available hardware and estimated training time
 
 ### Setup Weights & Biases (Optional)
 ```bash
@@ -36,16 +70,16 @@ wandb login
 
 ## Exploratory Data Analysis
 
-### Option 1: Run EDA Python Script (Recommended - Faster)
+### Option 1: Run EDA Python3 Script (Recommended - Faster)
 ```bash
 # Navigate to scripts directory
 cd scripts
 
 # Run EDA script
-python run_eda.py
+python33 run_eda.py
 
 # Or run from project root
-python scripts/run_eda.py
+python33 scripts/run_eda.py
 ```
 
 **Output:**
@@ -76,28 +110,28 @@ jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
 cd scripts
 
 # Process all splits (train, validation, test)
-python preprocess.py --split all
+python33 preprocess.py --split all
 
 # Or from project root
-python scripts/preprocess.py --split all
+python33 scripts/preprocess.py --split all
 ```
 
 #### Process Individual Splits
 ```bash
 # Process only training set
-python preprocess.py --split train
+python3 preprocess.py --split train
 
 # Process only validation set
-python preprocess.py --split validation
+python33 preprocess.py --split validation
 
 # Process only test set
-python preprocess.py --split test
+python3 preprocess.py --split test
 ```
 
 #### With Custom Parameters
 ```bash
 # Full customization
-python preprocess.py \
+python3 preprocess.py \
     --split all \
     --train_size 20000 \
     --val_size 5000 \
@@ -107,13 +141,13 @@ python preprocess.py \
     --seed 42
 
 # Example: Use shorter sequences
-python preprocess.py --split all --max_length 256
+python3 preprocess.py --split all --max_length 256
 
 # Example: Disable HTML removal
-python preprocess.py --split all --no-remove-html
+python3 preprocess.py --split all --no-remove-html
 
 # Example: Disable lowercasing
-python preprocess.py --split all --no-lowercase
+python33 preprocess.py --split all --no-lowercase
 ```
 
 #### Available Arguments
@@ -157,16 +191,16 @@ python preprocess.py --split all --no-lowercase
 cd scripts
 
 # Run with default parameters
-python train_baseline.py
+python3 train_baseline.py
 
 # Or from project root
-python scripts/train_baseline.py
+python3 scripts/train_baseline.py
 ```
 
 #### With Custom Parameters
 ```bash
 # Full customization
-python train_baseline.py \
+python3 train_baseline.py \
     --train_size 20000 \
     --val_size 5000 \
     --max_features 10000 \
@@ -175,13 +209,13 @@ python train_baseline.py \
     --seed 42
 
 # Example: Use more TF-IDF features
-python train_baseline.py --max_features 15000
+python3 train_baseline.py --max_features 15000
 
 # Example: Use trigrams
-python train_baseline.py --ngram_range 1 3
+python3 train_baseline.py --ngram_range 1 3
 
 # Example: Smaller training set for quick testing
-python train_baseline.py --train_size 5000 --val_size 1000
+python3 train_baseline.py --train_size 5000 --val_size 1000
 ```
 
 #### Available Arguments
@@ -207,13 +241,175 @@ python train_baseline.py --train_size 5000 --val_size 1000
 
 ---
 
-## DistilBERT Training (Coming Soon)
+## DistilBERT Training
 
-This section will be updated in Task 4.
+### Train DistilBERT for Sentiment Classification
 
+#### Basic Usage (with Virtual Environment - Recommended)
 ```bash
-# Placeholder for DistilBERT training commands
-# python train_distilbert.py
+# Navigate to scripts directory
+cd scripts
+
+# Activate virtual environment
+source ../venv/bin/activate
+
+# Train with default configuration (without W&B)
+python3 train_distilbert.py --config ../configs/distilbert_config.yaml --no-wandb
+
+# Or with W&B tracking
+python3 train_distilbert.py --config ../configs/distilbert_config.yaml
+```
+
+#### Basic Usage (without Virtual Environment)
+```bash
+# Navigate to scripts directory
+cd scripts
+
+# Train with default configuration
+python3 train_distilbert.py --config ../configs/distilbert_config.yaml --no-wandb
+```
+
+#### Quick Test Training (for debugging)
+```bash
+# Use test configuration with smaller dataset
+python3 train_distilbert.py --config ../configs/distilbert_config_test.yaml --no-wandb
+```
+
+#### Disable Weights & Biases
+```bash
+# Train without W&B logging
+python3 train_distilbert.py --no-wandb
+```
+
+#### Available Arguments
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--config` | ../configs/distilbert_config.yaml | Path to configuration file |
+| `--no-wandb` | False | Disable Weights & Biases logging |
+
+#### Configuration File (`configs/distilbert_config.yaml`)
+
+**Model Settings:**
+```yaml
+model:
+  name: distilbert-base-uncased
+  num_labels: 2
+  dropout: 0.1
+```
+
+**Training Hyperparameters:**
+```yaml
+training:
+  num_epochs: 3
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_steps: 500
+  train_batch_size: 16
+  eval_batch_size: 32
+```
+
+**Optimizer:**
+- Type: AdamW
+- Betas: [0.9, 0.999]
+- Epsilon: 1e-8
+
+**Scheduler:**
+- Type: Linear warmup and decay
+- Warmup ratio: 0.1
+
+**Output:**
+- Best model: `models/distilbert-sentiment/best_model/`
+- Checkpoints: `models/distilbert-sentiment/checkpoint-epoch{N}-step{M}/`
+- Training results: `models/distilbert-sentiment/training_results.json`
+- W&B dashboard: Real-time metrics tracking
+
+**Expected Performance:**
+- Target Validation Accuracy: ~92%
+- Training Time: ~30-45 minutes (GPU) or ~3-4 hours (CPU)
+- Model Size: ~256 MB
+
+**Features:**
+- ✓ Automatic GPU/CPU/MPS detection
+- ✓ Mixed precision training support (FP16)
+- ✓ Gradient accumulation
+- ✓ Learning rate warmup and decay
+- ✓ Checkpoint saving (best + periodic)
+- ✓ Early stopping based on validation accuracy
+- ✓ Weights & Biases experiment tracking
+
+---
+
+## Monitor Training Progress
+
+### Option 1: View Epoch & Accuracy Summary (Recommended)
+```bash
+# Navigate to scripts directory
+cd scripts
+
+# View training progress with epochs and accuracies
+python3 view_training_output.py
+
+# View all available monitoring commands
+python3 view_training_output.py --commands
+```
+
+**Output:**
+- ✅ Training status (Running/Completed)
+- 📊 Epoch-by-epoch summary with accuracies
+- 🎯 Target achievement status
+- ⏱️  Estimated time remaining
+- 💾 Saved model location
+
+### Option 2: Quick Status Check (Bash Script)
+```bash
+# Run quick status check
+bash check_training.sh
+
+# Or with detailed model info
+bash view_training_progress.sh
+```
+
+**Output:**
+- Training process status (running/not running)
+- Process details (PID, CPU, memory usage, runtime)
+- Model checkpoint status
+- Training results (if completed)
+
+### Option 3: Detailed Monitoring (Python3 Script)
+```bash
+# Single status check
+python3 monitor_training.py
+
+# Continuous monitoring (refreshes every 30 seconds)
+python3 monitor_training.py --watch
+```
+
+**Output:**
+- Complete training status
+- Process resource usage
+- Model directory contents
+- Checkpoints saved
+- Training results with metrics
+
+### Option 4: Check Training Output Directly
+```bash
+# Check if training process is running
+ps aux | grep train_distilbert.py
+
+# Monitor training log (if redirected to file)
+tail -f training.log
+```
+
+### Manual Status Verification
+```bash
+# Check if best model exists
+ls -lh ../models/distilbert-sentiment/best_model/
+
+# Check training results
+cat ../models/distilbert-sentiment/training_results.json | python3 -m json.tool
+
+# Check all checkpoints
+ls -lh ../models/distilbert-sentiment/
 ```
 
 ---
@@ -222,8 +418,8 @@ This section will be updated in Task 4.
 
 ### Load and Evaluate Saved Baseline Model
 
-```python
-# Python script to load and use the baseline model
+```python3
+# Python3 script to load and use the baseline model
 import joblib
 from datasets import load_dataset
 
@@ -242,7 +438,7 @@ print(predictions)  # 0 = Negative, 1 = Positive
 ### View Saved Metrics
 ```bash
 # View baseline metrics
-cat reports/baseline_metrics.json | python -m json.tool
+cat reports/baseline_metrics.json | python3 -m json.tool
 
 # Or use jq if installed
 cat reports/baseline_metrics.json | jq '.'
@@ -252,9 +448,9 @@ cat reports/baseline_metrics.json | jq '.'
 
 ## Inference
 
-### Baseline Model Inference (Python)
+### Baseline Model Inference (Python3)
 
-```python
+```python3
 import joblib
 
 # Load trained baseline model
@@ -283,7 +479,7 @@ for review, pred, prob in zip(reviews, predictions, probabilities):
 ### Quick Command-Line Inference
 ```bash
 # Create a simple inference script
-python -c "
+python3 -c "
 import joblib
 model = joblib.load('models/baseline_tfidf_logreg.joblib')
 review = 'This movie was amazing!'
@@ -300,7 +496,7 @@ This section will be updated in Task 6.
 
 ```bash
 # Placeholder for Gradio demo
-# python app.py
+# python3 app.py
 ```
 
 ---
@@ -320,13 +516,13 @@ pip install -r requirements.txt
 ```bash
 # Clear cache and retry
 rm -rf ~/.cache/huggingface/datasets/imdb
-python scripts/train_baseline.py
+python3 scripts/train_baseline.py
 ```
 
 ### Issue: Out of memory during training
 ```bash
 # Reduce training size
-python scripts/train_baseline.py --train_size 10000 --val_size 2000
+python3 scripts/train_baseline.py --train_size 10000 --val_size 2000
 ```
 
 ### Issue: pyarrow version conflict
@@ -335,34 +531,71 @@ python scripts/train_baseline.py --train_size 10000 --val_size 2000
 pip install --upgrade 'pyarrow>=21.0.0' 'datasets>=4.4.0' --force-reinstall
 ```
 
+### Issue: CUDA out of memory (DistilBERT training)
+```bash
+# Reduce batch size in config file
+# Edit configs/distilbert_config.yaml:
+#   train_batch_size: 8  (reduce from 16)
+#   eval_batch_size: 16  (reduce from 32)
+
+# Or enable gradient accumulation
+#   gradient_accumulation_steps: 2
+```
+
+### Issue: W&B login required
+```bash
+# Login to Weights & Biases
+wandb login
+
+# Or disable W&B
+python3 train_distilbert.py --no-wandb
+```
+
 ---
 
 ## Quick Reference: All Commands
 
 ```bash
-# 1. Setup
+# 1. Setup (with virtual environment - recommended)
+python33 -m venv venv
+source venv/bin/activate
+pip install torch==2.3.1
 pip install -r requirements.txt
 
-# 2. Run EDA
-python scripts/run_eda.py
+# 2. Check hardware device
+cd scripts
+python3 check_device.py
 
-# 3. Preprocess and tokenize data
-python scripts/preprocess.py --split all
+# 3. Run EDA
+python3 run_eda.py
 
-# 4. Train baseline model
-python scripts/train_baseline.py
+# 4. Preprocess and tokenize data
+python3 preprocess.py --split all
 
-# 5. View results
-cat reports/baseline_metrics.json | python -m json.tool
+# 5. Train baseline model
+python3 train_baseline.py
 
-# 6. View preprocessing config
-cat data/processed/preprocessing_config.json | python -m json.tool
+# 6. Train DistilBERT
+source ../venv/bin/activate
+python3 train_distilbert.py --config ../configs/distilbert_config.yaml --no-wandb
 
-# 7. Check model size
-ls -lh models/
+# 7. Monitor training progress (choose one)
+python3 view_training_output.py         # Best: Shows epochs & accuracies
+bash check_training.sh                  # Quick status check
+python3 monitor_training.py --watch      # Continuous monitoring
 
-# 8. View all reports
-ls -lh reports/
+# 8. View results
+cat ../reports/baseline_metrics.json | python3 -m json.tool
+cat ../models/distilbert-sentiment/training_results.json | python3 -m json.tool
+
+# 9. View preprocessing config
+cat ../data/processed/preprocessing_config.json | python3 -m json.tool
+
+# 10. Check model sizes
+ls -lh ../models/
+
+# 11. View all reports
+ls -lh ../reports/
 ```
 
 ---
@@ -371,14 +604,28 @@ ls -lh reports/
 
 ```
 distillbert_fineTune/
+├── venv/                       # Virtual environment (recommended)
 ├── scripts/
-│   ├── run_eda.py              # EDA automation script
-│   ├── preprocess.py           # Data preprocessing & tokenization
-│   └── train_baseline.py       # Baseline model training
+│   ├── run_eda.py                 # EDA automation script
+│   ├── preprocess.py              # Data preprocessing & tokenization
+│   ├── train_baseline.py          # Baseline model training
+│   ├── train_distilbert.py        # DistilBERT training
+│   ├── check_device.py            # Hardware device checker
+│   ├── view_training_output.py    # View epoch & accuracy summary (Recommended)
+│   ├── monitor_training.py        # Training progress monitor (Python3)
+│   ├── check_training.sh          # Quick status check (Bash)
+│   └── view_training_progress.sh  # Detailed status check (Bash)
+├── configs/
+│   ├── distilbert_config.yaml      # Full training configuration
+│   └── distilbert_config_test.yaml # Quick test configuration
 ├── notebooks/
 │   └── 01_exploratory_data_analysis.ipynb
 ├── models/
-│   └── baseline_tfidf_logreg.joblib
+│   ├── baseline_tfidf_logreg.joblib
+│   └── distilbert-sentiment/   # DistilBERT checkpoints
+│       ├── best_model/         # Best model saved
+│       ├── checkpoint-*/       # Training checkpoints
+│       └── training_results.json
 ├── reports/
 │   ├── baseline_metrics.json
 │   ├── baseline_confusion_matrix_val.png
@@ -403,12 +650,20 @@ distillbert_fineTune/
 
 ## Performance Benchmarks
 
-### Current Results (Task 4 Complete)
+### Current Results (Task 6 In Progress)
 
 | Model | Validation Acc | Test Acc | Training Time | Model Size |
 |-------|---------------|----------|---------------|------------|
 | TF-IDF + LogReg | 89.02% | 87.78% | 9.6s | 446 KB |
-| DistilBERT | TBD | TBD | TBD | TBD |
+| DistilBERT (Epoch 1) | **92.16%** 🎉 | In Progress | ~50 min/epoch | ~268 MB |
+
+**DistilBERT Training Progress:**
+- ✅ Epoch 1: Training Loss 0.3228, Training Acc 85.37%, **Validation Acc 92.16%**
+- 🔄 Epoch 2: In Progress
+- ⏳ Epoch 3: Pending
+- Hardware: MPS (Apple Silicon GPU)
+- Speed: ~2.5 seconds/batch
+- Estimated Total Time: ~2.5 hours (3 epochs)
 
 ### Data Processing Statistics
 
@@ -418,6 +673,14 @@ distillbert_fineTune/
 | Validation | 5,000 | 263 | 512 | 12 MB |
 | Test | 25,000 | 261 | 512 | 61 MB |
 
+### Hardware Tested
+
+| Device | Status | Training Speed | Notes |
+|--------|--------|----------------|-------|
+| MPS (Apple Silicon) | ✅ Working | ~2.5s/batch | Recommended for Mac M1/M2/M3 |
+| CPU | ✅ Working | ~5-10s/batch | Slower but stable |
+| CUDA GPU | Not Tested | ~1-2s/batch | Expected performance |
+
 ---
 
 ## Next Steps
@@ -426,11 +689,59 @@ distillbert_fineTune/
 - [x] Task 2: Dataset Acquisition & Exploratory Analysis
 - [x] Task 3: Classical Baseline Implementation
 - [x] Task 4: Data Preprocessing & Tokenization Pipeline
-- [ ] Task 5: DistilBERT Fine-tuning
-- [ ] Task 6: Model Interpretability (SHAP)
-- [ ] Task 7: Gradio Deployment
+- [x] Task 5: DistilBERT Model Architecture & Training Setup
+- [🔄] Task 6: Model Training Execution & Evaluation (In Progress - Epoch 2/3)
+- [ ] Task 7: Model Interpretability (SHAP)
+- [ ] Task 8: Gradio Deployment
 
 ---
 
-**Last Updated:** Task 4 Complete
+## Troubleshooting Guide
+
+### PyTorch Compatibility Issues
+
+**Problem:** Training hangs during model initialization or import takes forever
+
+**Solution:**
+```bash
+# Use virtual environment with PyTorch 2.3.1
+python33 -m venv venv
+source venv/bin/activate
+pip install torch==2.3.1
+pip install -r requirements.txt
+```
+
+### Training Not Running
+
+**Problem:** Training script appears stuck or not producing output
+
+**Check:**
+```bash
+# Verify training process is running
+ps aux | grep train_distilbert.py
+
+# Check CPU/Memory usage
+top -pid <PID>
+
+# Use monitoring scripts
+bash check_training.sh
+```
+
+### MPS (Apple Silicon) Not Detected
+
+**Problem:** Training uses CPU instead of MPS GPU
+
+**Check:**
+```bash
+# Verify MPS availability
+python3 -c "import torch; print('MPS available:', torch.backends.mps.is_available())"
+
+# Make sure config has auto_detect: true
+cat ../configs/distilbert_config.yaml | grep auto_detect
+```
+
+---
+
+**Last Updated:** Task 6 In Progress (Training Epoch 2/3)
 **Project:** DistilBERT Fine-Tuning for Sentiment Analysis
+**Current Status:** Achieved 92.16% validation accuracy after Epoch 1 ✅

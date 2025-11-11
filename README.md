@@ -136,7 +136,31 @@ Optional arguments:
 
 ### Training DistilBERT
 
-DistilBERT fine-tuning will be implemented in upcoming tasks.
+Train DistilBERT for sentiment classification:
+
+```bash
+cd scripts
+python train_distilbert.py --config ../configs/distilbert_config.yaml
+```
+
+Optional arguments:
+- `--config`: Path to configuration file (default: ../configs/distilbert_config.yaml)
+- `--no-wandb`: Disable Weights & Biases logging
+
+**Configuration** (`configs/distilbert_config.yaml`):
+- Learning rate: 2e-5
+- Batch size: 16 (train), 32 (eval)
+- Epochs: 3
+- Warmup steps: 500
+- Weight decay: 0.01
+- Max gradient norm: 1.0
+
+**Features:**
+- Automatic GPU/CPU detection
+- AdamW optimizer with linear warmup and decay
+- Weights & Biases experiment tracking
+- Checkpoint saving (best model + periodic checkpoints)
+- Evaluation on validation and test sets
 
 ### Inference
 
@@ -154,7 +178,8 @@ Inference scripts and Gradio demo will be added in subsequent tasks.
 
 ### DistilBERT (Target)
 - **Target Accuracy**: 92%
-- Training to be completed in Task 4
+- **Status**: Training infrastructure ready (Task 5 complete)
+- **Training**: Ready to train with `python train_distilbert.py`
 
 ## Project Status
 
@@ -162,9 +187,10 @@ Inference scripts and Gradio demo will be added in subsequent tasks.
 - [x] Task 2: Dataset Acquisition & Exploratory Analysis
 - [x] Task 3: Classical Baseline Implementation (TF-IDF + Logistic Regression)
 - [x] Task 4: Data Preprocessing & Tokenization Pipeline
-- [ ] Task 5: DistilBERT Fine-tuning
-- [ ] Task 6: Model Interpretability
-- [ ] Task 7: Gradio Deployment
+- [x] Task 5: DistilBERT Model Architecture & Training Setup
+- [ ] Task 6: Model Training Execution & Evaluation
+- [ ] Task 7: Model Interpretability (SHAP)
+- [ ] Task 8: Gradio Deployment
 
 ## Contributing
 
