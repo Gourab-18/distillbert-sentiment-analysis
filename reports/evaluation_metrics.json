@@ -1,0 +1,271 @@
+{
+  "evaluation_date": "2025-11-13T06:52:50.703670",
+  "dataset": "IMDb Movie Reviews (Test Set)",
+  "num_samples": 25000,
+  "models": {
+    "baseline": {
+      "model_name": "TF-IDF + Logistic Regression",
+      "accuracy": 0.87784,
+      "precision": 0.8778465388610629,
+      "recall": 0.87784,
+      "f1_weighted": 0.8778394714846894,
+      "precision_per_class": [
+        0.8794183804627249,
+        0.8762746972594009
+      ],
+      "recall_per_class": [
+        0.87576,
+        0.87992
+      ],
+      "f1_per_class": [
+        0.8775853775853776,
+        0.8780935653840013
+      ],
+      "confusion_matrix": [
+        [
+          10947,
+          1553
+        ],
+        [
+          1501,
+          10999
+        ]
+      ],
+      "roc_auc": 0.9499441792000001
+    },
+    "distilbert": {
+      "model_name": "DistilBERT (fine-tuned)",
+      "accuracy": 0.92652,
+      "precision": 0.9265789948511982,
+      "recall": 0.92652,
+      "f1_weighted": 0.9265174593852478,
+      "precision_per_class": [
+        0.9215624258717482,
+        0.9315955638306485
+      ],
+      "recall_per_class": [
+        0.9324,
+        0.92064
+      ],
+      "f1_per_class": [
+        0.9269495367240626,
+        0.926085382046433
+      ],
+      "confusion_matrix": [
+        [
+          11655,
+          845
+        ],
+        [
+          992,
+          11508
+        ]
+      ],
+      "roc_auc": 0.9791455647999998
+    }
+  },
+  "comparison": {
+    "accuracy_improvement": 0.04868000000000006,
+    "precision_improvement": 0.048732455990135315,
+    "recall_improvement": 0.04868000000000006,
+    "f1_improvement": 0.04867798790055833,
+    "roc_auc_improvement": 0.02920138559999974
+  },
+  "error_analysis": {
+    "total_samples": 25000,
+    "baseline_errors": 3054,
+    "distilbert_errors": 1837,
+    "baseline_only_errors": 2057,
+    "distilbert_only_errors": 840,
+    "both_errors": 997,
+    "error_reduction": 1217
+  },
+  "misclassified_examples": {
+    "baseline_fixed_by_distilbert": [
+      {
+        "text": "Blind Date (Columbia Pictures, 1934), was a decent film, but I have a few issues with this film. First of all, I don't fault the actors in this film at all, but more or less, I have a problem with the...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Beware, My Lovely (1952) Dir: Harry Horner <br /><br />Production: The Filmmakers/RKO Radio Pictures<br /><br />Credulity-straining thriller from the pioneering producer team of Collier Young and Ida ...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Widow hires a psychopath as a handyman. Sloppy film noir thriller which doesn't make much of its tension promising set-up. (3/10)...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "A sprawling, overambitious, plotless comedy that has no dramatic center. It was probably intended to have an epic vision and a surrealistic flair (at least in some episodes), but the separate stories ...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "This only gets bashed because it stars David Hasselhoff. Well, then let me bash it to. Compared to the garbage they call horror coming out nowadays, this film isn't too bad. It has the beautiful Lesli...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "It's Saturday, it's raining, and I think every movie should have at least one comment... so I just watched \"The Crime Doctor's Courage\" all the way through. It's a murder mystery with a typical cast o...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Maniratnam, who in India, is often compared with prominent world film makers and is regarded a genius in film-making, has yet again proved that he can only make the frames look visually good, without ...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Like 'Singin' in the Rain', 'Cover Girl' has a trio of two guys and a girl. In 'Cover Girl', Phil Silvers (Genius) is the comic relief. He corresponds to Donald O'Connor's funny man part in 'Singin in...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Rita Hayworth plays a Brooklyn nightclub dancer named Rusty who specializes in cheesecake chorus revues; she manages to get herself on the cover of a national fashion magazine, but her impending succe...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      },
+      {
+        "text": "Formulaic slasher film, only this one stars three ten year olds (all born during a lunar eclipse) as the killers. Nice, huh? A little bit of gore and a nice nude scene may make this worthwhile for die...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Negative"
+      }
+    ],
+    "distilbert_new_errors": [
+      {
+        "text": "Ben, (Rupert Grint), is a deeply unhappy adolescent, the son of his unhappily married parents. His father, (Nicholas Farrell), is a vicar and his mother, (Laura Linney), is ... well, let's just say sh...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "The only reason this movie is not given a 1 (awful) vote is that the acting of both Ida Lupino and Robert Ryan is superb. Ida Lupino who is lovely, as usual, becomes increasingly distraught as she tri...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "1983's \"Frightmare\" is an odd little film. The director seems to be trying to combine the atmosphere of classic '30s/'40s style horror movies with the shock factor of the then-exploding '80s slasher g...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "I don't get it! The teenage leads in \"Horror Star\" supposedly all are devoted horror fans, yet when their favorite idol (Conrad Radzoff) passes away, they dig up his corpse and do all sorts of disresp...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "This is a hard film to rate. While it truly deserves its 3 (or perhaps even a two), for an Al Adamson film, it's exceptional--and practically Adamson's very best. That's because unlike many Adamson fi...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "I am a big fan of bad horrors, cheap horrors, b movies, and all that bottom 100 movies, and I do not deny those are the worst stuff ever to enter the big screen, or even your home video for that matte...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "He who fights with monsters might take care lest he thereby become a monster. And if you gaze for long into an abyss, the abyss gazes also into you.<br /><br />Yes, this is from Nietzsche's Aphorism 1...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "Breaking Dawn starts in a Californian college as Professor Simon (associate producer Joe Morton) tells his students that they have to perform an intensive six week study of a mental patient in Cape St...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "I saw this movie as part of a Billy Graham program. The church I attend was part of a community wide outreach to present God and Christianity to our community (Hartford, Ct. USA). I was one of the cou...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "It is OK movie if it would be done by high school kids for their friends. It is way below limits be called \"professional\". There isn't plot, no actors' play and visual looks like you see it through th...",
+        "true_label": "Negative",
+        "baseline_pred": "Negative",
+        "distilbert_pred": "Positive"
+      }
+    ],
+    "both_models_wrong": [
+      {
+        "text": "First off let me say, If you haven't enjoyed a Van Damme movie since bloodsport, you probably will not like this movie. Most of these movies may not have the best plots or best actors but I enjoy thes...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "Low budget horror movie. If you don't raise your expectations too high, you'll probably enjoy this little flick. Beginning and end are pretty good, middle drags at times and seems to go nowhere for lo...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "I'm the type of guy who loves hood movies from New Jack City to Baby Boy to Killa Season, from the b grade to the Hollywood. but this movie was something different. i am no hater and this movie was ki...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "Okay, so it was never going to change the world, and it bombed at the box office, but Honky Tonk Freeway is one of those films I fell in love with as a child (the BBC showed it a few times during the ...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "This film features two of my favorite guilty pleasures. Sure, the effects are laughable, the story confused, but just watching Hasselhoff in his Knight Rider days is always fun. I especially like the ...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "Wow, another Kevin Costner hero movie. Postman, Tin Cup, Waterworld, Bodyguard, Wyatt Earp, Robin Hood, even that baseball movie. Seems like he makes movies specifically to be the center of attention....",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "This movie should have been billed as three movie-summaries linked together to form a full-length feature film (including lots of shots of people slowly walking down dark corridors and streets). BE WA...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "There must be an error. This movie belongs with \"Plan 9\", and a lot others as a quite entertaining, silly diversion. You'll never accept you like it, yet you will watch it whenever it comes out on TV....",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "Just watched on UbuWeb this early experimental short film directed by William Vance and Orson Welles. Yes, you read that right, Orson Welles! Years before he gained fame for radio's \"The War of the Wo...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      },
+      {
+        "text": "An interesting period picec showing us what was amazing in 1938. Gosh, Ma, a fake accident ring suing for $25,000!!! I guess projected into the 21st century it would amount to a lot of money. The acti...",
+        "true_label": "Negative",
+        "baseline_pred": "Positive",
+        "distilbert_pred": "Positive"
+      }
+    ]
+  }
+}
