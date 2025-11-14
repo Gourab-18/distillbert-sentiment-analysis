@@ -490,14 +490,88 @@ print(f'Sentiment: {\"Positive\" if prediction == 1 else \"Negative\"}')
 
 ---
 
-## Gradio UI (Coming Soon)
+## Task 9: Interactive Demo with Streamlit
 
-This section will be updated in Task 6.
+### Launch Streamlit App
 
 ```bash
-# Placeholder for Gradio demo
-# python3 app.py
+# Navigate to project root
+cd /Users/gourabnanda/Desktop/ML/distillbert_fineTune
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Launch Streamlit app
+streamlit run app.py
+
+# Or with custom port
+streamlit run app.py --server.port 8501
 ```
+
+**Access the app:**
+- **Local URL:** http://localhost:8501
+- **Network URL:** Available on your local network
+- **External URL:** Available if firewall allows
+
+### Features
+
+The Streamlit app provides:
+- ✅ Real-time sentiment prediction with confidence scores
+- ✅ Token-level SHAP explanations showing word importance
+- ✅ Interactive visualization of model decisions
+- ✅ 5 example inputs for quick testing
+- ✅ Clean, professional UI with sidebar
+- ✅ Model caching for fast performance
+- ✅ Probability distribution display
+- ✅ Color-coded SHAP visualizations (Red = Positive, Blue = Negative)
+
+### How to Use
+
+1. Open the app in your browser (automatically opens)
+2. Enter text in the text area or click an example from the sidebar
+3. Click "🔍 Analyze Sentiment" button
+4. View the sentiment prediction, confidence score, and SHAP explanation
+
+### Outputs
+
+The app displays:
+- **Sentiment Label:** Positive 😊 or Negative 😞
+- **Confidence Score:** Percentage confidence of prediction
+- **Probability Distribution:** Visual bars showing positive/negative probabilities
+- **SHAP Explanation:** Color-coded token importance visualization
+  - Red tokens = push toward Positive sentiment
+  - Blue tokens = push toward Negative sentiment
+  - Intensity = strength of influence
+
+### Example Inputs Available
+
+1. Positive movie review with praise
+2. Negative service complaint
+3. Neutral product review
+4. Enthusiastic recommendation
+5. Strong disappointment
+
+### Performance
+
+- **Model Loading:** ~5-10 seconds (cached after first run)
+- **Prediction Time:** <1 second per analysis
+- **SHAP Generation:** 1-2 seconds per explanation
+- **Total Latency:** ~2-3 seconds for complete analysis
+
+### Stopping the App
+
+```bash
+# Press Ctrl+C in the terminal to stop the Streamlit server
+```
+
+### Task 9 Results (COMPLETED ✅)
+
+- **Framework:** Streamlit 1.50.0
+- **Model:** DistilBERT (92.65% test accuracy)
+- **SHAP Integration:** Token-level interpretability
+- **Interface:** Clean, responsive web UI
+- **Examples:** 5 pre-loaded examples
+- **Caching:** Enabled for fast performance
 
 ---
 
@@ -596,6 +670,9 @@ ls -lh ../models/
 
 # 11. View all reports
 ls -lh ../reports/
+
+# 12. Launch Streamlit demo app
+streamlit run app.py
 ```
 
 ---
@@ -648,6 +725,191 @@ distillbert_fineTune/
 
 ---
 
+## Task 7: Comprehensive Model Evaluation & Performance Comparison
+
+### Run Full Evaluation on Test Set
+
+```bash
+cd scripts
+source ../venv/bin/activate
+
+# Run comprehensive evaluation (takes ~20-30 minutes for 25K samples)
+python evaluate.py
+```
+
+**What it does:**
+- Evaluates both Baseline and DistilBERT on full test set (25,000 samples)
+- Generates comprehensive metrics (Accuracy, Precision, Recall, F1, ROC AUC)
+- Creates confusion matrix comparison
+- Performs detailed error analysis
+- Generates 3 visualization plots
+
+**Outputs:**
+- `reports/evaluation_metrics.json` - Complete metrics data
+- `reports/evaluation_summary.md` - Human-readable summary
+- `reports/confusion_matrix_comparison.png` - Side-by-side confusion matrices
+- `reports/performance_comparison.png` - Bar chart of all metrics
+- `reports/per_class_metrics.png` - Per-class precision/recall/F1
+
+### View Evaluation Results
+
+```bash
+# View summary report
+cat ../reports/evaluation_summary.md
+
+# View JSON results
+python -m json.tool ../reports/evaluation_metrics.json | less
+
+# Open visualizations
+open ../reports/confusion_matrix_comparison.png
+open ../reports/performance_comparison.png
+open ../reports/per_class_metrics.png
+```
+
+### Task 7 Results (COMPLETED ✅)
+
+- **DistilBERT Test Accuracy:** 92.65% 🎉 (Target ≥92% ACHIEVED!)
+- **Baseline Test Accuracy:** 87.78%
+- **Improvement:** +4.87 percentage points
+- **Error Reduction:** 1,217 samples (39.9% fewer errors)
+- **DistilBERT Errors:** 1,837 (7.35%)
+- **Baseline Errors:** 3,054 (12.22%)
+
+**Report:** See `reports/evaluation_summary.md` for full analysis
+
+---
+
+## Task 8: SHAP-Based Model Interpretability
+
+### Generate SHAP Explanations
+
+```bash
+cd scripts
+source ../venv/bin/activate
+
+# Generate explanations for default 30 examples
+python explain.py
+
+# Generate for fewer examples (faster)
+python explain.py --num-examples 5
+
+# Generate for more examples
+python explain.py --num-examples 50
+
+# Explain a specific text
+python explain.py --text "This movie was absolutely amazing! Great acting and wonderful plot."
+```
+
+**What it does:**
+- Generates SHAP (SHapley Additive exPlanations) for model predictions
+- Shows token-level importance scores
+- Creates 3 types of visualizations per example
+- Provides interpretability for why the model made its prediction
+
+**Outputs:**
+- `reports/explanations/force_plots/` - Interactive HTML force plots
+- `reports/explanations/waterfall_plots/` - Waterfall PNG charts
+- `reports/explanations/text_plots/` - Color-coded text PNG images
+- `reports/explanations/explanations_metadata.json` - All explanation data
+- `reports/explanations/explanations_summary.md` - Human-readable summary
+
+### View SHAP Explanations
+
+```bash
+cd reports/explanations
+
+# Open folder in Finder
+open .
+
+# Open specific force plot (interactive HTML)
+open force_plots/example_000_idx23921.html
+
+# Open waterfall plot (PNG)
+open waterfall_plots/example_000_idx23921.png
+
+# Open text plot (PNG)
+open text_plots/example_000_idx23921.png
+
+# View summary
+cat explanations_summary.md
+
+# View summary plots
+open category_distribution.png
+open confidence_distribution.png
+```
+
+### Use Interactive Viewer Script
+
+```bash
+cd scripts
+
+# Run interactive menu to view explanations
+./view_explanations.sh
+```
+
+**Menu options:**
+1. Open explanations folder in Finder
+2. Open first 5 force plots in browser
+3. Open first 5 waterfall plots
+4. Open first 5 text plots
+5. Open all summary plots
+6. Open summary report
+7. List all files
+8. Open specific example by number
+
+### Programmatic Usage (Python API)
+
+```python
+from explain import SentimentExplainer
+
+# Initialize explainer
+explainer = SentimentExplainer()
+
+# Explain a new text
+result = explainer.predict_with_explanation("This movie was fantastic!")
+
+print(f"Prediction: {result['prediction']}")
+print(f"Confidence: {result['confidence']:.2%}")
+
+# Access SHAP values
+shap_values = result['shap_values']
+
+# Save visualizations
+explainer.save_force_plot(shap_values, "my_force_plot.html")
+explainer.save_waterfall_plot(shap_values, "my_waterfall.png")
+```
+
+### Understanding SHAP Visualizations
+
+**Force Plots (HTML):**
+- Red text = pushes toward Positive sentiment
+- Blue text = pushes toward Negative sentiment
+- Hover over words to see exact SHAP values
+
+**Waterfall Plots (PNG):**
+- Shows cumulative effect of top tokens
+- Bars show individual token contributions
+- Easy to see which words had biggest impact
+
+**Text Plots (PNG):**
+- Color-coded inline text
+- Red/pink = positive contribution
+- Blue/cyan = negative contribution
+- Intensity = strength of contribution
+
+### Task 8 Results (COMPLETED ✅)
+
+- **Examples Explained:** 5 diverse examples
+- **Force Plots:** 5 interactive HTML visualizations
+- **Waterfall Plots:** 5 PNG charts
+- **Text Plots:** 5 PNG color-coded visualizations
+- **Summary Plots:** 3 aggregate visualizations
+- **API:** Programmatic interface available for new inputs
+
+**Documentation:** See `reports/task8_overview.md` for detailed guide
+
+---
+
 ## Performance Benchmarks
 
 ### Current Results (Task 6 COMPLETED ✅)
@@ -696,8 +958,22 @@ distillbert_fineTune/
   - Test Accuracy: **92.78%** 🎉
   - Validation Accuracy: **92.72%** 🎉
   - Report: `reports/task6_completion_report.md`
-- [ ] Task 7: Model Interpretability (SHAP)
-- [ ] Task 8: Gradio Deployment
+- [x] **Task 7: Comprehensive Model Evaluation & Performance Comparison** ✅ **COMPLETED!**
+  - Test Accuracy: **92.65%** 🎉 (Target ≥92% ACHIEVED!)
+  - Improvement over Baseline: **+4.87 pp**
+  - Error Reduction: **1,217 samples** (39.9% fewer errors)
+  - Report: `reports/evaluation_summary.md`
+- [x] **Task 8: SHAP-Based Model Interpretability** ✅ **COMPLETED!**
+  - **5 diverse examples** explained with token-level importance
+  - **15 visualizations** (force, waterfall, text plots)
+  - **Programmatic API** available for new inputs
+  - Documentation: `reports/task8_overview.md`
+- [x] **Task 9: Interactive Demo with Streamlit** ✅ **COMPLETED!**
+  - **Streamlit web app** with real-time predictions
+  - **SHAP visualizations** integrated into UI
+  - **5 example inputs** for quick testing
+  - **Model caching** for fast performance
+  - Launch with: `streamlit run app.py`
 
 ---
 
@@ -747,7 +1023,17 @@ cat ../configs/distilbert_config.yaml | grep auto_detect
 
 ---
 
-**Last Updated:** Task 6 COMPLETED ✅
+**Last Updated:** Tasks 6, 7, 8, 9 COMPLETED ✅
 **Project:** DistilBERT Fine-Tuning for Sentiment Analysis
-**Final Results:** 92.78% test accuracy, 92.72% validation accuracy (Target: 92%+ ACHIEVED!)
-**Report:** See `reports/task6_completion_report.md` for full details
+
+**Key Results:**
+- **Task 6 (Training):** 92.78% test accuracy (Target: 92%+ ACHIEVED!)
+- **Task 7 (Evaluation):** Comprehensive analysis with 92.65% test accuracy, +4.87pp improvement over baseline
+- **Task 8 (Interpretability):** SHAP explanations with 5 examples, 15 visualizations, programmatic API
+- **Task 9 (Interactive Demo):** Streamlit web app with real-time predictions and SHAP visualizations
+
+**Reports:**
+- Task 6: `reports/task6_completion_report.md`
+- Task 7: `reports/evaluation_summary.md`
+- Task 8: `reports/task8_overview.md`
+- Task 9: Launch with `streamlit run app.py`
