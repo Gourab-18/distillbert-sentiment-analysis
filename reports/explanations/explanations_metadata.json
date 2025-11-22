@@ -1,0 +1,47 @@
+[
+  {
+    "index": 20452,
+    "true_label": 1,
+    "predicted_label": "Positive",
+    "confidence": 0.9871931672096252,
+    "category": "Positive (Random)",
+    "text": "Some of the reviewers here have foolishly judged this silent film by political-correctness standards of today. <br /><br />\"Battle\" was an excellent film for several reasons, correctly noted by more rational reviewers: Superb cast, lots of action, innovative editing and photography. <br /><br />Its stars were in effect the D.W. Griffith stock company and to this silent movie fan, that is inducement enough to watch it and to enjoy it. <br /><br />I saw it many years ago and just watched it again at YouTube; that was a very poor quality print, but coupled with my memory of a good print in a real theater, I can justifiably recommend this to reasonable people and film historians.",
+    "text_length": 684
+  },
+  {
+    "index": 13235,
+    "true_label": 1,
+    "predicted_label": "Positive",
+    "confidence": 0.9947088956832886,
+    "category": "Positive (Random)",
+    "text": "A terrific B-feature. A virtual two-hander and set over the course of a day, (you can see it's stage origins and even how it must have worked as a radio play), and although only 77 minutes long, played out in sequences akin to something like real time. Robert Ryan is the psychopath who keeps Ida Lupino trapped in her own home. Both are superb, especially the under-rated Lupino whose initial independence and self-control soon crumble before Ryan's unhinged intruder. Today, of course, it would be all guts and gore but the restraint shown by director Harry Horner, (much better known as an Art Director), only adds to the suspense which at times is worthy of Hitchcock.",
+    "text_length": 672
+  },
+  {
+    "index": 8144,
+    "true_label": 0,
+    "predicted_label": "Negative",
+    "confidence": 0.9961994290351868,
+    "category": "Negative (Random)",
+    "text": "Having loved Stephen King's novels and short stories for many years, I, like most reviewers, have been consistently disappointed in the adaptations to film from his printed works. A few notable exceptions are \"Stand By Me\" from \"The Body\", \"Carrie\" from the novel of the same name, and \"The Shawshank Redemption\" from \"Rita Heyworth and Shawshank Redemption\". This movie is by far the worst thing that has ever been produced with Stephen King's name attached to it in any way. It is no surprise that Mr. King has pretty much disavowed any connection with it. I feel the thing that most offended me about this poorly acted, cheaply filmed, hideously directed piece of garbage is that they had the audacity to COMPLETELY change the ending Don't waste your time or money on this amazing bow-wow of a movie!!",
+    "text_length": 804
+  },
+  {
+    "index": 7482,
+    "true_label": 0,
+    "predicted_label": "Negative",
+    "confidence": 0.9930956959724426,
+    "category": "Negative (Random)",
+    "text": "After spending half an hour examining Rumors, a gay bar located outside Tupelo, Mississippi, SMALL TOWN GAY BAR shifts focus to the murder of Scotty Weaver in Bay Minette in order to demonstrate the risks run by the interview subjects. But there is a problem here. Bay Minette isn't near Tupelo, as the film implies. It isn't even in the same state. It is actually about three hundred miles away in coastal Alabama.<br /><br />Director Malcom Ingram doesn't exactly rush to point out this fact, nor does he bother to mention that while Bay Minette itself is little more than a wide spot in the road, it is actually about two deep breaths away from the major metro area of Mobile, Alabama--which has a noticeable gay community, quite a few gay bars, and even a congregation of Metropolitan Community Church. If Ingram is disingenuous on these points, one has to ask if he is on others as well.<br /><br />Speaking as someone who was born, raised, and continues to live in Mississippi, I have to say that I find most of SMALL TOWN GAY BAR a lot of hooey. Neither Meridian nor Tupelo, the communities upon which Ingram focuses, are as rural, small, or as isolated as he would have you imagine, and gay bars are indeed more common in the state than the film implies. That said, Ingram rather blithely ignores the fact that the absence of a gay bar does not mean an absence of a gay community, and in doing so he demonstrates a rather profound ignorance of southern culture, which tends to hold those who frequent bars--be they gay or straight--in low esteem.<br /><br />SMALL TOWN GAY BAR is, in my opinion, an instance in which a film maker came to his subject with a personal agenda in hand and then proceeded to film the agenda. Do gays and lesbians living in rural Mississippi face major, sometimes frightening challenges? You bet they do--but that's no excuse for fiddling with reality to such a degree. The DVD includes a commentary track and a number of deleted scenes, but I found the feature film itself so ridiculous that I didn't waste any time on them.<br /><br />GFT, Amazon Reviewer",
+    "text_length": 2092
+  },
+  {
+    "index": 2826,
+    "true_label": 0,
+    "predicted_label": "Negative",
+    "confidence": 0.9939365983009338,
+    "category": "Negative (Random)",
+    "text": "Maybe I expected too much of this film, but at the very least a comedy should be funny, and this one has very few amusing moments. It manages to be insulting to homosexuals, heterosexuals, women, the obese, and probably several other groups as well. The scene at graduation where _everyone_ claims to be gay is one of the most distasteful I have ever seen.<br /><br />Tom Selleck and Matt Dillon are ridiculously miscast and Kevin Kline seems bemused most of the time.<br /><br />Other reviewers compare the film to \"Will and Grace\", but at least \"Will and Grace\" _is_ funny.",
+    "text_length": 575
+  }
+]
